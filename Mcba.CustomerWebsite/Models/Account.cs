@@ -16,7 +16,7 @@ public class Account
     [Display(Name = "Account Number")]
     public int AccountNumber { get; set; }
 
-    [Column(TypeName = "char")]
+    [Column(TypeName = "char(1)")]
     [Display(Name = "Type")]
     public char AccountType { get; set; }
 

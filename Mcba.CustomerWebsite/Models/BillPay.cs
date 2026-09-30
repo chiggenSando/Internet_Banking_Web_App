@@ -13,6 +13,7 @@ public class BillPay
 {
     public int BillPayID { get; set; }
 
+    [ForeignKey("Account")]
     [Display(Name = "Account Number")]
     public int AccountNumber { get; set; }
     public virtual Account Account { get; set; }
@@ -28,6 +29,6 @@ public class BillPay
     [Display(Name = "Scheduled Time")]
     public DateTime ScheduleTimeUtc { get; set; }
 
-    [Column(TypeName = "char")]
+    [Column(TypeName = "char(1)")]
     public char Period { get; set; }
 }

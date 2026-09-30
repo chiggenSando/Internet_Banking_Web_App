@@ -16,7 +16,7 @@ public class Transaction
 {
     public int TransactionID { get; set; }
 
-    [Column(TypeName = "char")]
+    [Column(TypeName = "char(1)")]
     [Display(Name = "Type")]
     public char TransactionType { get; set; }
 
