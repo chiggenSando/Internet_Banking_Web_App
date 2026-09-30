@@ -1,4 +1,23 @@
+using Mcba.CustomerWebsite.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<McbaContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(McbaContext)));
+
+    //enable lazy loading.
+    options.UseLazyLoadingProxies();
+});
+
+//Store Session into web-server memory
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    // Make the session cookies essential 
+    options.Cookie.IsEssential = true;
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -17,6 +36,8 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapStaticAssets();
 
