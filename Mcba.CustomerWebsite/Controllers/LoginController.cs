@@ -1,7 +1,6 @@
-using Mcba.CustomerWebsite.Data;
-using Mcba.CustomerWebsite.Models;
+using Mcba.Data;
+using Mcba.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Packaging.Signing;
 using SimpleHashing.Net;
 
 namespace Mcba.CustomerWebsite.Controllers;
@@ -25,7 +24,13 @@ public class LoginController : Controller
         var login = await _context.Logins.FindAsync(loginID);
         if (login == null || string.IsNullOrEmpty(password) || !s_simpleHash.Verify(password, login.PasswordHash))
         {
-            ModelState.AddModelError("Login Failed", "Login failed please try again.");
+            ModelState.AddModelError("LoginFailed", "Login failed please try again.");
+            return View(new Login { LoginID = loginID});
+        }
+
+        if (login.IsLocked)
+        {
+            ModelState.AddModelError("LoginFailed", "Your account is locked, please contact MCBA.");
             return View(new Login { LoginID = loginID});
         }
 
