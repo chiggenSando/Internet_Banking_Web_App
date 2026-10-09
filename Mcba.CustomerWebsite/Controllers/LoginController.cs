@@ -17,7 +17,7 @@ public class LoginController : Controller
         _context = context;
     }
 
-    public IActionResult Login() => View;
+    public IActionResult Login() => View();
 
     [HttpPost]
     public async Task<IActionResult> Login(string loginID, string password)
