@@ -1,7 +1,6 @@
-using Mcba.CustomerWebsite.Data;
-using Mcba.CustomerWebsite.Models;
+using Mcba.Data;
+using Mcba.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Packaging.Signing;
 using SimpleHashing.Net;
 
 namespace Mcba.CustomerWebsite.Controllers;

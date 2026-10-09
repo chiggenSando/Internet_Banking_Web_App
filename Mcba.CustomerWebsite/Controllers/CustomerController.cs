@@ -1,8 +1,7 @@
-using Mcba.CustomerWebsite.Data;
+using Mcba.Data;
+using Mcba.Data.Models;
 using Mcba.CustomerWebsite.Filters;
-using Mcba.CustomerWebsite.Models;
 using Microsoft.AspNetCore.Mvc;
-using SimpleHashing.Net;
 
 
 namespace Mcba.CustomerWebsite.Controllers;

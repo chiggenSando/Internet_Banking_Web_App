@@ -1,4 +1,4 @@
-﻿using Mcba.CustomerWebsite.Models;
+﻿using Mcba.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
