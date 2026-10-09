@@ -1,7 +1,7 @@
-using Mcba.CustomerWebsite.Models;
+using Mcba.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Mcba.CustomerWebsite.Data;
+namespace Mcba.Data;
 
 public class McbaContext : DbContext
 {
