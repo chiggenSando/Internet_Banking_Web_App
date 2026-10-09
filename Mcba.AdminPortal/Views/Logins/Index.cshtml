@@ -1,0 +1,47 @@
+@model List<LoginViewModel>
+@{
+    ViewData["Title"] = "Customer Logins";
+}
+
+<h1 class="display-6">Customer Logins</h1>
+<p>A locked customer cannot log in to the customer website until they are unlocked.</p>
+<partial name="_Message" />
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(x => x[0].LoginID)</th>
+            <th>@Html.DisplayNameFor(x => x[0].CustomerID)</th>
+            <th>@Html.DisplayNameFor(x => x[0].CustomerName)</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var login in Model)
+        {
+            <tr>
+                <td>@login.LoginID</td>
+                <td>@login.CustomerID</td>
+                <td>@login.CustomerName</td>
+                <td>
+                    @if (login.IsLocked)
+                    {
+                        <span class="badge bg-danger">Locked</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                </td>
+                <td>
+                    <form asp-action="@(login.IsLocked ? "Unlock" : "Lock")" asp-route-id="@login.LoginID" method="post">
+                        <button type="submit" class="btn btn-sm @(login.IsLocked ? "btn-outline-success" : "btn-outline-danger")">
+                            @(login.IsLocked ? "Unlock" : "Lock")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

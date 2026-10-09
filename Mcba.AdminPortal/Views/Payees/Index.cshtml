@@ -1,0 +1,60 @@
+@model List<PayeeViewModel>
+@{
+    ViewData["Title"] = "Payees";
+    var selectedState = ViewData["State"] as string;
+}
+
+<h1 class="display-6">Payees</h1>
+<partial name="_Message" />
+
+<div class="d-flex justify-content-between align-items-end mb-3">
+    <form asp-action="Index" method="get" class="d-flex align-items-end gap-2">
+        <div>
+            <label for="state" class="form-label">Filter by state</label>
+            <select id="state" name="state" class="form-select">
+                <option value="">All states</option>
+                @foreach (var state in PayeeViewModel.States)
+                {
+                    <option value="@state" selected="@(state == selectedState)">@state</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">Filter</button>
+    </form>
+    <a asp-action="Create" class="btn btn-primary">Create Payee</a>
+</div>
+
+@if (Model.Count == 0)
+{
+    <p>No payees found.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(x => x[0].PayeeID)</th>
+                <th>@Html.DisplayNameFor(x => x[0].Name)</th>
+                <th>@Html.DisplayNameFor(x => x[0].Address)</th>
+                <th>@Html.DisplayNameFor(x => x[0].City)</th>
+                <th>@Html.DisplayNameFor(x => x[0].State)</th>
+                <th>@Html.DisplayNameFor(x => x[0].Postcode)</th>
+                <th>@Html.DisplayNameFor(x => x[0].Phone)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payee in Model)
+            {
+                <tr>
+                    <td>@payee.PayeeID</td>
+                    <td>@payee.Name</td>
+                    <td>@payee.Address</td>
+                    <td>@payee.City</td>
+                    <td>@payee.State</td>
+                    <td>@payee.Postcode</td>
+                    <td>@payee.Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
