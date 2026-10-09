@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Mcba.CustomerWebsite.Migrations
+namespace Mcba.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

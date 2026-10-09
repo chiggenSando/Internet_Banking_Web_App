@@ -18,4 +18,8 @@
     <PackageReference Include="SimpleHashing.Net" Version="2.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mcba.Data\Mcba.Data.csproj" />
+  </ItemGroup>
+
 </Project>
