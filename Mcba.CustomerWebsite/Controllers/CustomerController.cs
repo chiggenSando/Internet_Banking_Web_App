@@ -6,6 +6,7 @@ using Mcba.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList.Extensions;
 
 
 namespace Mcba.CustomerWebsite.Controllers;
@@ -192,4 +193,5 @@ public class CustomerController : Controller
             $"{x.AccountNumber} ({(x.AccountType == AccountTypes.Savings ? "Savings" : "Checking")}) - {x.Balance:C}",
             x.AccountNumber.ToString())).ToList();
     }
+
 }
