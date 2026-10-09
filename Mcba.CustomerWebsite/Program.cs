@@ -1,4 +1,5 @@
 using Mcba.CustomerWebsite.Data;
+using Mcba.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

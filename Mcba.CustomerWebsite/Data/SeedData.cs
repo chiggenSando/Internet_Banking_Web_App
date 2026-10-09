@@ -1,6 +1,7 @@
 using System.Globalization;
 using Mcba.CustomerWebsite.Dtos;
-using Mcba.CustomerWebsite.Models;
+using Mcba.Data;
+using Mcba.Data.Models;
 using Newtonsoft.Json;
 
 namespace Mcba.CustomerWebsite.Data;
