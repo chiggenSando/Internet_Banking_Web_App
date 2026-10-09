@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Mcba.CustomerWebsite.Models;
+namespace Mcba.Data.Models;
 
 public class Payee
 {

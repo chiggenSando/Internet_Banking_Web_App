@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Mcba.CustomerWebsite/Mcba.CustomerWebsite.csproj" />
+  <Project Path="Mcba.Data/Mcba.Data.csproj" />
 </Solution>
