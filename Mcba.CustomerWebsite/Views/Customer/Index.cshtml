@@ -20,9 +20,9 @@
     @foreach (var account in Model.Accounts)
     {
         <tr>
-            <td>@account.AccountNumber</td>
+            <td><a asp-action="Statements" asp-route-accountNumber="@account.AccountNumber">@account.AccountNumber</a></td>
             <td>@(account.AccountType == AccountTypes.Savings ? "Savings" : "Checking")</td>
             <td>@Html.DisplayFor(x => account.Balance)</td>
         </tr>
     }
-</table>
+</table> 

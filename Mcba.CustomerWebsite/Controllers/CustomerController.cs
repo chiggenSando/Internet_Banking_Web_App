@@ -6,6 +6,7 @@ using Mcba.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList.Extensions;
 
 
 namespace Mcba.CustomerWebsite.Controllers;
@@ -76,8 +77,7 @@ public class CustomerController : Controller
         if (ModelState.IsValid && model.TransactionType != TransactionTypes.Deposit)
         {
             model.ServiceCharge = await ServiceChargeAsync(account, model.TransactionType);
-            var minimumBalance = account.AccountType == AccountTypes.Checking ? -100 : 0;
-            if (account.Balance - model.Amount - model.ServiceCharge < minimumBalance)
+            if (account.Balance - model.Amount - model.ServiceCharge < MinimumBalance(account))
                 ModelState.AddModelError(nameof(model.Amount), "Insufficient funds for this amount and its service charge.");
         }
 
@@ -171,6 +171,34 @@ public class CustomerController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    public async Task<IActionResult> Statements(int? accountNumber, int page = 1)
+    {
+        var options = await AccountOptionsAsync();
+
+        // Default to the cutomer's first account.
+        accountNumber ??= int.Parse(options[0].Value);
+
+        var account = await _context.Accounts.FindAsync(accountNumber);
+        if (account == null || account.CustomerID != CustomerID)
+            return NotFound();
+
+        options.ForEach(x => x.Selected = x.Value == account.AccountNumber.ToString());
+        ViewBag.Accounts = options;
+        ViewBag.Account = account;
+        ViewBag.AvailableBalance = account.Balance - MinimumBalance(account);
+
+        // Newest transaction first, 4 per page.
+        const int pageSize = 4;
+        var pagedList = _context.Transactions
+            .Where(x => x.AccountNumber == account.AccountNumber)
+            .OrderByDescending(x => x.TransactionTimeUtc)
+            .ThenByDescending(x => x.TransactionID)
+            .ToPagedList(page, pageSize);
+
+        return View(pagedList);
+    }
+
+    private decimal MinimumBalance(Account account) => account.AccountType == AccountTypes.Checking ? -100 : 0;
     // A1 rules 10-12: withdrawals and outgoing transfers use up the free transactions, then
     // cost $0.05 or $0.10. Deposits and incoming transfers never count and never cost.
     private async Task<decimal> ServiceChargeAsync(Account account, char type)
@@ -185,6 +213,7 @@ public class CustomerController : Controller
         return type == TransactionTypes.Withdraw ? WithdrawFee : TransferFee;
     }
 
+    // Returns a list of the customer's accounts.
     private async Task<List<SelectListItem>> AccountOptionsAsync()
     {
         var accounts = await _context.Accounts.Where(x => x.CustomerID == CustomerID).ToListAsync();
@@ -192,4 +221,5 @@ public class CustomerController : Controller
             $"{x.AccountNumber} ({(x.AccountType == AccountTypes.Savings ? "Savings" : "Checking")}) - {x.Balance:C}",
             x.AccountNumber.ToString())).ToList();
     }
+
 }
