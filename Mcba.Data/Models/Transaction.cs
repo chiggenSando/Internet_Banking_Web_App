@@ -13,7 +13,7 @@ public static class TransactionTypes
 }
 
 public class Transaction
-{
+{   [Display(Name = "ID")]
     public int TransactionID { get; set; }
 
     [Column(TypeName = "char(1)")]
@@ -36,8 +36,10 @@ public class Transaction
     public decimal Amount { get; set; }
 
     [StringLength(30)]
+    [Display(Name = "Comment")]
     public string Comment { get; set; }
 
+    [Display(Name = "Time")]
     public DateTime TransactionTimeUtc { get; set; }
 }
 
