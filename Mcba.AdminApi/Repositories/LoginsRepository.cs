@@ -14,12 +14,20 @@ public class LoginsRepository(McbaContext _context) : ILoginsRepository
             {
                 LoginID = l.LoginID,
                 CustomerID = l.CustomerID,
-                CustomerName = l.Customer.Name
+                CustomerName = l.Customer.Name,
+                IsLocked = l.IsLocked
             }).ToListAsync();
     }
 
     public async Task<bool> SetLockedAsync(string loginId, bool locked)
     {
-        throw new NotImplementedException();
+        var login = await _context.Logins.FindAsync(loginId);
+        if (login is null)
+        {
+            return false;
+        }
+        login.IsLocked = locked;
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

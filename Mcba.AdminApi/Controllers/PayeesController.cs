@@ -6,12 +6,11 @@ namespace Mcba.AdminApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PayeesController(IPayeeRepository repo) : ControllerBase
+public class PayeesController(IPayeeRepository _repo) : ControllerBase
 {
-    private readonly IPayeeRepository _repo = repo;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Payee>>> GetAll([FromQuery] string state)
+    public async Task<ActionResult<IEnumerable<Payee>>> GetAll([FromQuery] string? state)
     {
         return Ok(await _repo.GetAllAsync(state));
     }

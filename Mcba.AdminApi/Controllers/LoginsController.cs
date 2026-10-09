@@ -1,4 +1,5 @@
 using Mcba.AdminApi.Repositories;
+using Mcba.Data.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mcba.AdminApi.Controllers;
@@ -12,6 +13,9 @@ public class LoginsController(ILoginsRepository _repo) : ControllerBase
 
     [HttpPut("{id}/unlock")]
     public async Task<IActionResult> Unlock(string id) => await SetLocked(id, false);
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<LoginDto>>> GetAll() => Ok(await _repo.LoginsAsync());
 
     private async Task<IActionResult> SetLocked(string id, bool locked)
     {
