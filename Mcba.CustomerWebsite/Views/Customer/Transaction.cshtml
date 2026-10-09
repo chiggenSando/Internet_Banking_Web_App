@@ -1,0 +1,44 @@
+@model TransactionViewModel
+@{
+    ViewData["Title"] = Model.TypeName;
+}
+
+<h1 class="display-4">@Model.TypeName</h1>
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Transaction">
+            <input type="hidden" asp-for="TransactionType" />
+            <div class="mb-3">
+                <label asp-for="AccountNumber" class="form-label"></label>
+                <select asp-for="AccountNumber" class="form-select"
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Accounts"></select>
+                <span asp-validation-for="AccountNumber" class="text-danger"></span>
+            </div>
+            @if (Model.TransactionType == TransactionTypes.Transfer)
+            {
+                <div class="mb-3">
+                    <label asp-for="DestinationAccountNumber" class="form-label"></label>
+                    <input asp-for="DestinationAccountNumber" class="form-control" />
+                    <span asp-validation-for="DestinationAccountNumber" class="text-danger"></span>
+                </div>
+            }
+            <div class="mb-3">
+                <label asp-for="Amount" class="form-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Comment" class="form-label"></label>
+                <input asp-for="Comment" class="form-control" />
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <input type="submit" value="Next" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-link">Back to My Accounts</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
