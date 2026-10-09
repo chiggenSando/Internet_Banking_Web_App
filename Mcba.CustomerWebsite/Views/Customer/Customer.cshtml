@@ -1,0 +1,23 @@
+@model Customer
+@{
+    ViewData["Title"] = "My Accounts";
+}
+
+<h1 class="display-4">Welcome, @Model.Name</h1>
+
+<h3>Your Accounts</h3>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(x => x.Accounts[0].AccountNumber)</th>
+        <th>@Html.DisplayNameFor(x => x.Accounts[0].AccountType)</th>
+        <th>@Html.DisplayNameFor(x => x.Accounts[0].Balance)</th>
+    </tr>
+    @foreach (var account in Model.Accounts)
+    {
+        <tr>
+            <td>@account.AccountNumber</td>
+            <td>@(account.AccountType == AccountTypes.Savings ? "Savings" : "Checking")</td>
+            <td>@Html.DisplayFor(x => account.Balance)</td>
+        </tr>
+    }
+</table>
