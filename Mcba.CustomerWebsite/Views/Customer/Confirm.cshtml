@@ -1,0 +1,31 @@
+@model TransactionViewModel
+@{
+    ViewData["Title"] = "Confirm " + Model.TypeName;
+}
+
+<h1 class="display-4">Confirm @Model.TypeName</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Type</dt>
+    <dd class="col-sm-9">@Model.TypeName</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.AccountNumber)</dt>
+    <dd class="col-sm-9">@Model.AccountNumber</dd>
+    @if (Model.TransactionType == TransactionTypes.Transfer)
+    {
+        <dt class="col-sm-3">@Html.DisplayNameFor(x => x.DestinationAccountNumber)</dt>
+        <dd class="col-sm-9">@Model.DestinationAccountNumber</dd>
+    }
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.Amount)</dt>
+    <dd class="col-sm-9">@Model.Amount.ToString("C")</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.ServiceCharge)</dt>
+    <dd class="col-sm-9">@Model.ServiceCharge.ToString("C")</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.Comment)</dt>
+    <dd class="col-sm-9">@Model.Comment</dd>
+</dl>
+
+<form asp-action="Confirm" method="post" class="d-inline">
+    <button type="submit" class="btn btn-primary">Confirm</button>
+</form>
+<form asp-action="Cancel" method="post" class="d-inline">
+    <button type="submit" class="btn btn-secondary">Cancel</button>
+</form>
