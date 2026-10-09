@@ -1,0 +1,68 @@
+@using System.Globalization;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IPagedList<Transaction>
+@{
+    ViewData["Title"] = "My Statements";
+    var account = (Account)ViewBag.Account;
+}
+
+<h1 class="display-4">My Statements</h1>
+
+<form asp-action="Statements" method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="accountNumber" class="form-select" asp-items="(IEnumerable<SelectListItem>)ViewBag.Accounts"></select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">View</button>
+    </div>
+</form>
+
+<dl class="row">
+    <dt class="col-sm-3">Account</dt>
+    <dd class="col-sm-9">@account.AccountNumber (@(account.AccountType == AccountTypes.Savings ? "Savings" : "Checking"))</dd>
+    <dt class="col-sm-3">Current Balance</dt>
+    <dd class="col-sm-9">@account.Balance.ToString("C")</dd>
+    <dt class="col-sm-3">Available Balance</dt>
+    <dd class="col-sm-9">@(((decimal)ViewBag.AvailableBalance).ToString("C"))</dd>
+</dl>
+
+@if (Model.Count == 0)
+{
+    <p>No transactions for this account.</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x => x[0].TransactionID)</th>
+            <th>@Html.DisplayNameFor(x => x[0].TransactionType)</th>
+            <th>@Html.DisplayNameFor(x => x[0].AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x => x[0].DestinationAccountNumber)</th>
+            <th class="text-end">@Html.DisplayNameFor(x => x[0].Amount)</th>
+            <th>@Html.DisplayNameFor(x => x[0].TransactionTimeUtc)</th>
+            <th>@Html.DisplayNameFor(x => x[0].Comment)</th>
+        </tr>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => transaction.TransactionID)</td>
+                <td>@Html.DisplayFor(x => transaction.TransactionType)</td>
+                <td>@Html.DisplayFor(x => transaction.AccountNumber)</td>
+                <td>@Html.DisplayFor(x => transaction.DestinationAccountNumber)</td>
+                <td class="text-end">@Html.DisplayFor(x => transaction.Amount)</td>
+                <td>@transaction.TransactionTimeUtc.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt", CultureInfo.InvariantCulture)</td>
+                <td>@Html.DisplayFor(x => transaction.Comment)</td>
+            </tr>
+        }
+    </table>
+
+    @Html.PagedListPager(
+        Model,
+        page => Url.Action("Statements", new { accountNumber = account.AccountNumber, page }),
+        new PagedListRenderOptions {
+            LiElementClasses = ["page-item"],
+            PageClasses = ["page-link"]
+        }
+    )
+}
