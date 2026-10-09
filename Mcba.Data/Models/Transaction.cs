@@ -39,7 +39,7 @@ public class Transaction
     [Display(Name = "Comment")]
     public string Comment { get; set; }
 
-    [Display(Name = "Time")]
+    [Display(Name = "Date")]
     public DateTime TransactionTimeUtc { get; set; }
 }
 
