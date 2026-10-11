@@ -3,8 +3,12 @@ using Mcba.Data.Models;
 using Microsoft.EntityFrameworkCore;
 namespace Mcba.AdminApi.Repositories;
 
+/// <summary>
+/// Entity Framework implementation of <see cref="IPayeeRepository"/>.
+/// </summary>
 public class PayeeRepository(McbaContext _context) : IPayeeRepository
 {
+    /// <inheritdoc/>
     public async Task<IEnumerable<Payee>> GetAllAsync(string? state)
     {
         var payees = _context.Payees.AsQueryable();
@@ -12,10 +16,12 @@ public class PayeeRepository(McbaContext _context) : IPayeeRepository
             payees = payees.Where(p => p.State == state.ToUpper());
         return await payees.OrderBy(p => p.Name).ToListAsync();
     }
+    /// <inheritdoc/>
     public async Task<Payee?> GetAsync(int id)
     {
         return await _context.Payees.FindAsync(id);
     }
+    /// <inheritdoc/>
     public async Task<Payee> AddAsync(Payee payee)
     {
         _context.Payees.Add(payee);

@@ -4,8 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mcba.AdminApi.Repositories;
 
+/// <summary>
+/// Entity Framework implementation of <see cref="ILoginsRepository"/>.
+/// </summary>
 public class LoginsRepository(McbaContext _context) : ILoginsRepository
 {
+    /// <inheritdoc/>
     public async Task<IEnumerable<LoginDto>> LoginsAsync()
     {
         return await _context.Logins
@@ -19,6 +23,7 @@ public class LoginsRepository(McbaContext _context) : ILoginsRepository
             }).ToListAsync();
     }
 
+    /// <inheritdoc/>
     public async Task<bool> SetLockedAsync(string loginId, bool locked)
     {
         var login = await _context.Logins.FindAsync(loginId);
