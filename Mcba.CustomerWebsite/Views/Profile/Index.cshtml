@@ -1,0 +1,33 @@
+@model Customer
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<h1 class="display-4">My Profile</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.Name)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(x => x.Name)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.TFN)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(x => x.TFN)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.Address)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(x => x.Address)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.City)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(x => x.City)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.State)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(x => x.State)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.Postcode)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(x => x.Postcode)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(x => x.Mobile)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(x => x.Mobile)</dd>
+</dl>
+
+<a asp-action="Edit" class="btn btn-primary">Edit Profile</a>
+<a asp-action="ChangePassword" class="btn btn-secondary">Change Password</a>
