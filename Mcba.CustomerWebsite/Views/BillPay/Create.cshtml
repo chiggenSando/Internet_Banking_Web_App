@@ -1,0 +1,56 @@
+@model BillPayViewModel
+@{
+    ViewData["Title"] = "Schedule a Payment";
+    var payees = (List<SelectListItem>)ViewBag.Payees;
+}
+
+<h1 class="display-4">Schedule a Payment</h1>
+
+@if (payees.Count == 0)
+{
+    <div class="alert alert-warning">There are no payees available yet. Please contact the bank.</div>
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+            <div class="mb-3">
+                <label asp-for="AccountNumber" class="form-label"></label>
+                <select asp-for="AccountNumber" class="form-select"
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Accounts"></select>
+                <span asp-validation-for="AccountNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PayeeID" class="form-label"></label>
+                <select asp-for="PayeeID" class="form-select" asp-items="payees">
+                    <option value="">Select a payee</option>
+                </select>
+                <span asp-validation-for="PayeeID" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Amount" class="form-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ScheduleTime" class="form-label"></label>
+                <input asp-for="ScheduleTime" type="datetime-local" class="form-control" />
+                <span asp-validation-for="ScheduleTime" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Period" class="form-label">How often</label>
+                <select asp-for="Period" class="form-select">
+                    <option value="@BillPayPeriods.OneOff">One-off</option>
+                    <option value="@BillPayPeriods.Annual">Annual</option>
+                </select>
+                <span asp-validation-for="Period" class="text-danger"></span>
+            </div>
+            <input type="submit" value="Schedule" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-link">Back to BillPay</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
