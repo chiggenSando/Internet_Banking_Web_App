@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="Mcba.AdminApi/Mcba.AdminApi.csproj" />
   <Project Path="Mcba.AdminPortal/Mcba.AdminPortal.csproj" />
+  <Project Path="Mcba.CustomerWebsite.Tests/Mcba.CustomerWebsite.Tests.csproj" />
   <Project Path="Mcba.CustomerWebsite/Mcba.CustomerWebsite.csproj" />
   <Project Path="Mcba.Data/Mcba.Data.csproj" />
 </Solution>
