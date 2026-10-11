@@ -1,0 +1,75 @@
+@model List<BillPay>
+@{
+    ViewData["Title"] = "BillPay";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1 class="display-4">BillPay</h1>
+    <a asp-action="Create" class="btn btn-primary">Schedule a Payment</a>
+</div>
+
+<p>Scheduled payments are made automatically from your account at the date and time you choose.</p>
+
+@if (Model.Any(x => x.IsFailed))
+{
+    <div class="alert alert-danger">
+        One or more payments failed because the account did not have enough funds.
+        Add funds and choose <strong>Retry</strong>, or <strong>Cancel</strong> the payment.
+    </div>
+}
+
+@if (Model.Count == 0)
+{
+    <p>You have no scheduled payments.</p>
+}
+else
+{
+    <table class="table align-middle">
+        <tr>
+            <th>@Html.DisplayNameFor(x => x[0].Payee)</th>
+            <th>@Html.DisplayNameFor(x => x[0].AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x => x[0].Amount)</th>
+            <th>@Html.DisplayNameFor(x => x[0].ScheduleTimeUtc)</th>
+            <th>@Html.DisplayNameFor(x => x[0].Period)</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        @foreach (var bill in Model)
+        {
+            <tr class="@(bill.IsFailed ? "table-danger" : "")">
+                <td>@bill.Payee.Name</td>
+                <td>@bill.AccountNumber</td>
+                <td>@Html.DisplayFor(x => bill.Amount)</td>
+                <td>@bill.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
+                <td>@(bill.Period == BillPayPeriods.Annual ? "Annual" : "One-off")</td>
+                <td>
+                    @if (bill.IsFailed)
+                    {
+                        <span class="badge bg-danger">Failed: insufficient funds</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Scheduled</span>
+                    }
+                </td>
+                <td class="text-end">
+                    @if (bill.IsFailed)
+                    {
+                        <form asp-action="Retry" asp-route-id="@bill.BillPayID" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Retry</button>
+                        </form>
+                    }
+                    <form asp-action="Cancel" asp-route-id="@bill.BillPayID" method="post" class="d-inline"
+                          onsubmit="return confirm('Cancel this scheduled payment?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}

@@ -31,4 +31,5 @@ public class BillPay
 
     [Column(TypeName = "char(1)")]
     public char Period { get; set; }
+    public bool IsFailed { get; set; }
 }

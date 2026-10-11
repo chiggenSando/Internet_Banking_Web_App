@@ -66,6 +66,9 @@ namespace Mcba.Data.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
+                    b.Property<bool>("IsFailed")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PayeeID")
                         .HasColumnType("int");
 

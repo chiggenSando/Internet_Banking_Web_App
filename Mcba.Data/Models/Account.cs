@@ -27,6 +27,10 @@ public class Account
     [DataType(DataType.Currency)]
     public decimal Balance { get; set; }
 
+    // A1 business rule: savings cannot go below $0, checking cannot go below -$100.
+    [NotMapped]
+    public decimal MinimumBalance => AccountType == AccountTypes.Checking ? -100 : 0;
+
     [InverseProperty("Account")]
     public virtual List<Transaction> Transactions { get; set; }
 

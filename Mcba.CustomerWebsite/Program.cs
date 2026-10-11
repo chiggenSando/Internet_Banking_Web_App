@@ -1,4 +1,5 @@
 using Mcba.CustomerWebsite.Data;
+using Mcba.CustomerWebsite.Services;
 using Mcba.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,10 @@ builder.Services.AddSession(options =>
     // Make the session cookies essential 
     options.Cookie.IsEssential = true;
 });
+
+// Scheduled bill payments.
+builder.Services.AddScoped<BillPayProcessor>();
+builder.Services.AddHostedService<BillPayBackgroundService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
