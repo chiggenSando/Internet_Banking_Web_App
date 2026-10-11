@@ -1,32 +1,53 @@
-﻿@model Login
+@model Login
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Welcome";
 }
 
-<h1 class="display-4">Login</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div class="form-group">
-                <label asp-for="LoginID" class="control-label"></label>
-                <input asp-for="LoginID" class="form-control" />
-                <span asp-validation-for="LoginID" class="text-danger"></span>
+<div class="row align-items-center g-5 mt-2">
+    <div class="col-md-7">
+        <h1 class="display-5">Most Common Bank of Australia</h1>
+        <p class="lead">Simple, secure internet banking.</p>
+        <p>
+            MCBA Internet Banking gives you 24/7 access to your savings and checking accounts.
+            Log in to check your balances and manage your money without visiting a branch.
+        </p>
+        <ul>
+            <li>See the balance of all your accounts at a glance</li>
+            <li>Deposit, withdraw, and transfer money to your own accounts or to other MCBA customers</li>
+            <li>Browse your full statement history for any account</li>
+            <li>Schedule one-off or annual bill payments with BillPay</li>
+            <li>Keep your personal details and password up to date</li>
+        </ul>
+        <p class="text-muted small">
+            Every account includes 2 free withdrawals or transfers. After that, ATM withdrawals cost $0.05
+            and transfers cost $0.10. Deposits and BillPay payments are always free.
+        </p>
+        <img src="~/img/piggy-bank.png" alt="Piggy bank" class="img-fluid" style="max-width: 360px;" />
+    </div>
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 card-title mb-3">Login</h2>
+                <form asp-action="Login">
+                    <div class="mb-3">
+                        <label asp-for="LoginID" class="form-label"></label>
+                        <input asp-for="LoginID" class="form-control" />
+                        <span asp-validation-for="LoginID" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Password</label>
+                        <input id="Password" name="Password" type="password" class="form-control"
+                               data-val="true" data-val-required="The Password field is required." />
+                        @Html.ValidationMessage("Password", new { @class = "text-danger" })
+                    </div>
+                    <input type="submit" value="Login" class="btn btn-primary w-100" />
+                    @Html.ValidationMessage("LoginFailed", new { @class = "text-danger d-block mt-2" })
+                </form>
             </div>
-            <div class="form-group">
-                <label for="Password" class="control-label">Password</label>
-                <input id="Password" name="Password" type="password" class="form-control"
-                    data-val="true" data-val-required="The Password field is required." />
-                @Html.ValidationMessage("Password", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-            @Html.ValidationMessage("LoginFailed", new { @class = "text-danger" })
-        </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <partial name="_ValidationScriptsPartial" />
 }
