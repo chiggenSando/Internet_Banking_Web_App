@@ -4,7 +4,7 @@ A web-based internet banking system for the fictional Most Common Bank of Austra
 
 Customers log in to view their accounts, move money, browse statements, schedule bill payments and manage their profile. Bank staff use a separate admin portal to manage payees and lock or unlock customer logins.
 
-This was a group project for **Web Development Technologies** at RMIT (Assignment 2). See [About the project](#about-the-project--group-assignment).
+This was a group project for **Web Development Technologies**. See [About the project](#about-the-project--group-assignment).
 
 ## Contents
 
@@ -20,10 +20,9 @@ This was a group project for **Web Development Technologies** at RMIT (Assignmen
 
 This was a two-person group assignment, completed in Semester 2, 2026.
 
-| Member | Student ID |
-| --- | --- |
-| Benjamin Norrie | s4076520 |
-| Seth Tootell | s4095464 |
+Team Member 
+- Benjamin Norrie
+- Seth Tootell 
 
 **How we worked**
 
